@@ -39,7 +39,6 @@ fn check(s_data: Vec<i32>) -> bool {
         Dec,
         Non,
     }
-    let mut count = 1;
     let mut state = State::Non;
     for i in 1..s_data.len() {
         if s_data[i - 1] < s_data[i]
@@ -47,16 +46,14 @@ fn check(s_data: Vec<i32>) -> bool {
             && ((s_data[i] - s_data[i - 1]).abs() < 4)
         {
             state = State::Inc;
-            count += 1;
         } else if s_data[i - 1] > s_data[i]
             && (state == State::Non || state == State::Dec)
             && ((s_data[i] - s_data[i - 1]).abs() < 4)
         {
             state = State::Dec;
-            count += 1;
         } else {
             return false;
         }
     }
-    count == s_data.len()
+    true
 }

@@ -13,8 +13,7 @@ fn main() {
         if do_.is_match(i) {
             enable = true;
             continue;
-        }
-        if dont.is_match(i) {
+        }else if dont.is_match(i) {
             enable = false;
             continue;
         }

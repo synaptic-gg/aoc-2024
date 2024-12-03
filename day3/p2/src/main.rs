@@ -1,12 +1,8 @@
 mod input;
 use regex::Regex;
-
 fn main() {
     let data = input::data().unwrap();
     let re = Regex::new(r"mul\((\d+),(\d+)\)|do\(\)|don't\(\)").unwrap();
-    //let do_ = Regex::new(r"do\(\)").unwrap();
-    //let dont = Regex::new(r"don't\(\)").unwrap();
-
     let mut result = 0;
     let mut enable = true;
     for i in re.captures_iter(&data) {
@@ -24,6 +20,5 @@ fn main() {
             result += a * b;
         }
     }
-
     println!("{}", result);
 }

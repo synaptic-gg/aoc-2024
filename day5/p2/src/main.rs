@@ -1,4 +1,3 @@
-
 mod input;
 use std::collections::{HashMap, HashSet};
 
@@ -13,8 +12,7 @@ pub fn main() {
     for page in pages {
         let checked = check(page, &hash_con);
         if !checked {
-        
-            let data = sort(page,&hash_con);
+            let data = sort(page, &hash_con);
 
             let y = data.len() / 2;
             //println!("{:?}", data);
@@ -26,8 +24,6 @@ pub fn main() {
 
     println!("{}", result)
 }
-
-
 
 pub fn build_graph(rules: &[(i32, i32)], update: &[i32]) -> HashMap<i32, Vec<i32>> {
     let page_set: HashSet<i32> = update.iter().cloned().collect();
@@ -46,19 +42,25 @@ pub fn build_graph(rules: &[(i32, i32)], update: &[i32]) -> HashMap<i32, Vec<i32
     graph
 }
 
-pub fn dfs(node:i32,graph: &HashMap<i32,Vec<i32>> , visted: &mut HashSet<i32>,temp : &mut HashSet<i32>,sorted : &mut  Vec<i32> )-> bool {
-    if temp.contains(&node){
-        return  false;
+pub fn dfs(
+    node: i32,
+    graph: &HashMap<i32, Vec<i32>>,
+    visted: &mut HashSet<i32>,
+    temp: &mut HashSet<i32>,
+    sorted: &mut Vec<i32>,
+) -> bool {
+    if temp.contains(&node) {
+        return false;
     }
-    if !visted.contains(&node){
+    if !visted.contains(&node) {
         temp.insert(node);
-        for n in &graph[&node]{
-            if !dfs(*n, graph, visted, temp, sorted){
-                return  false;
+        for n in &graph[&node] {
+            if !dfs(*n, graph, visted, temp, sorted) {
+                return false;
             }
         }
         temp.remove(&node);
-        visted.insert(node); 
+        visted.insert(node);
         sorted.push(node);
     }
     true
@@ -73,9 +75,9 @@ pub fn con_hash(con_data: &str) -> HashMap<i32, Vec<i32>> {
             .filter_map(|n| Some(n.trim().parse::<i32>().unwrap()));
         let i2 = val.next().unwrap();
         let i1 = val.next().unwrap();
-       out.entry(i1).or_default().push(i2);
+        out.entry(i1).or_default().push(i2);
     }
-//println!("{:?}",out);
+    //println!("{:?}",out);
     out
 }
 
@@ -98,16 +100,13 @@ pub fn sort(page: &str, condition: &HashMap<i32, Vec<i32>>) -> Vec<i32> {
 
     for &node in &data {
         if !visited.contains(&node) {
-           let _ =  !dfs(node, &graph, &mut visited, &mut temp, &mut sorted) ;
-                
-            
+            let _ = !dfs(node, &graph, &mut visited, &mut temp, &mut sorted);
         }
     }
 
     sorted.reverse();
     sorted
 }
-
 
 pub fn check(check_data: &str, condition: &HashMap<i32, Vec<i32>>) -> bool {
     let data = check_data
